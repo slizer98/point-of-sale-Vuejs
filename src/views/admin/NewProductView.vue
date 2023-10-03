@@ -8,7 +8,7 @@
   <div>
     <Link to="products">Volver</Link>
 
-    <h1 class="text-4xl font-black my-10">Nuevo Producto</h1>
+    <h1 class="text-4xl font-black my-10 text-gray-700">Nuevo Producto</h1>
     <div class="w-full flex justify-center bg-white shadow">
       <div class="mt-10 p-10  2xl:w-2/4">
         <FormKit
