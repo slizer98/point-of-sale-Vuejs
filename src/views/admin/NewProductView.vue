@@ -1,10 +1,13 @@
 <script setup>
   import { reactive } from 'vue';
+  import { useRouter } from 'vue-router';
   import Link from '@/components/Link.vue';
   import useImage from '@/composables/useImage';
   import { useProductsStore } from '../../stores/products'
 
   const products = useProductsStore()
+  const { onFileChange, url, isImageUploaded } = useImage()
+  const router = useRouter()
   const formData = reactive({
     name:         '',
     category:     '',
@@ -14,10 +17,21 @@
 
    })
 
-  const { onFileChange, url, isImageUploaded } = useImage()
 
-  const submitHandler = data => {
-    console.log(data)
+  const submitHandler = async data => {
+    const { image, ...values } = data
+
+    try {
+      await products.createProduct({
+        ...values,
+        image: url.value
+      })
+
+      router.push({name: 'products'})
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
   
 </script>
@@ -68,7 +82,7 @@
           name="category" 
           validation="required"
           :validation-messages="{required: 'La categoría es obligatoria'}"
-          :options="[1,2,3]"
+          :options="products.categoryOptions"
           v-model.number="formData.catogery"
         />
         <FormKit 
