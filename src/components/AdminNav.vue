@@ -5,9 +5,9 @@
 
 <template>
   <header class="px-10 py-5 bg-gray-700 flex justify-between items-center absolute top-0 w-full z-10">
-    <div>
+    <router-link :to="{name: 'shop'}">
       <Logo />
-    </div>
+    </router-link>
   
     <nav>
       <RouterLink 
