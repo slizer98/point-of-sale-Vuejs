@@ -11,14 +11,16 @@
     <input 
       type="text"
       placeholder="Ingresa un cupón"
-      class="p-2 bg-white border-gray-300 w-full"
+      class="p-2 bg-white border-gray-300 w-full disabled:opacity-50"
       :class="store.couponInputValidation"
+      :disabled="store.isValidCoupon"
       v-model="store.couponInput"
     >
     <button 
       type="button"
-      class="p-3 bg-green-400 font-bold"
+      class="p-3 bg-green-400 font-bold disabled:opacity-50"
       @click="store.applyCoupon"
+      :disabled="store.isValidCoupon"
     >Canjear</button>
   </div>
   <small :class="store.couponExists">{{ store.couponValidationMessage }}</small>

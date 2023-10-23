@@ -4,8 +4,10 @@
   import Amount from './Amount.vue';
   import ShoppingCartItem from './ShoppingCartItem.vue'
   import CouponForm from './CouponForm.vue';
+  import { useCouponStore } from '../stores/coupons';
   
   const cart = useCartStore()
+  const coupon = useCouponStore()
   
 </script>
 
@@ -30,6 +32,10 @@
         <Amount> 
           <template #label>Impuestos:</template>
           {{ formatCurrency(cart.taxes) }}
+        </Amount>
+        <Amount v-if="coupon.isValidCoupon"> 
+          <template #label>Descuento:</template>
+          {{ formatCurrency(coupon.discount) }}
         </Amount>
         <Amount> 
           <template #label>Total a Pagar:</template>
