@@ -1,6 +1,6 @@
 import { ref, computed, watchEffect } from 'vue'
 import { defineStore} from 'pinia'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, runTransaction, doc } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'
 import Swal from 'sweetalert2'
 import { useCouponStore } from './coupons'
@@ -67,16 +67,28 @@ export const useCartStore = defineStore('cart', ()=> {
                 total: total.value,
                 date: getCurrentDate()
             })
-            
+
+            items.value.forEach(async item => {
+                const productRef = doc(db, 'products', item.id)
+                await runTransaction(db, async (transaction) => {
+                    const currentProduct = await transaction.get(productRef)
+                    const availability = currentProduct.data().availability - item.quantity
+                    transaction.update(productRef, { availability })
+                })
+            })
+
             Swal.fire({
                 icon: 'success',
                 title: 'Compra exitosa!',
-                text: 'Gracias por tu compra',
-                confirmButtonColor: '#4ade80',
-            }).then(() => {
-                $reset()
-                coupon.$reset()
-            })
+                showConfirmButton: false, 
+            });
+
+            $reset()
+            coupon.$reset()
+            
+            setTimeout(() => {
+                Swal.close();
+            }, 2000);
             
         } catch (error) {
             console.log(error)
