@@ -6,11 +6,11 @@ export const useCouponStore = defineStore('coupon', () => {
 
     const cart = useCartStore()
     const couponInput = ref('')
-    const couponInputValidation = ref('')
-    const couponValidationMessage = ref('')
     const couponExists = ref('')
     const discountPercentage = ref(0)
     const discount = ref(0)
+    const couponInputValidation = ref('')
+    const couponValidationMessage = ref('')
     
     const VALID_COUPONS = [
         {name: '10DESCUENTO', discount: .10},
@@ -49,15 +49,26 @@ export const useCouponStore = defineStore('coupon', () => {
         
     }
 
+    function $reset() {
+        couponInput.value = ''
+        couponExists.value = ''
+        discountPercentage.value = 0
+        discount.value = 0
+        couponInputValidation.value = ''
+        couponValidationMessage.value = ''
+    }
+
     const isValidCoupon = computed(() => discountPercentage.value > 0 )
     
     return {
         couponInput,
         applyCoupon,
+        $reset,
         couponInputValidation,
         couponValidationMessage,
         couponExists,
         discount,
-        isValidCoupon
+        isValidCoupon,
+
     }
 })
