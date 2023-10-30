@@ -8,7 +8,6 @@ import config from '../formkit.config'
 import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './config/firebase'
 
-
 import App from './App.vue'
 import router from './router'
 
@@ -21,5 +20,6 @@ app.use(VueFire, {
 firebaseApp,
   modules: [VueFireAuth()],
 })
+
 
 app.mount('#app')

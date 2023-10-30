@@ -34,7 +34,7 @@
       </div>
     </div> 
     <nav>
-      <Link to="admin" class="text-gray-700 font-black">Administrar</Link>
+      <Link to="sales" class="text-gray-700 font-black">Administrar</Link>
     </nav>
     
   </header>
